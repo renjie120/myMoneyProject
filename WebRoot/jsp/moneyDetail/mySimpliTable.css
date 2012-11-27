@@ -1,0 +1,43 @@
+body {
+	font: 62.5% "Trebuchet MS", sans-serif;
+	margin: 0px;
+}
+
+.content {
+	background-color: #d6e3f7;
+}
+
+.content td {
+	font-size: 12px;
+}
+
+#tallyTypeImg {
+	background:
+		url(../../js/jquery_ui/themes/smoothness/images/ui-icons_cd0a0a_256x240.png)
+		; /* for IE6 */
+	width: 20px;
+	height: 20px;
+	background-position: -32px -128px;
+}
+
+.mytable td {
+	height: 22px;
+	border-bottom: 1px solid black;
+	border-right: 1px solid black;
+	cursor: default;
+}
+
+.mytable th {
+	height: 20px;
+	font-size: 12px;
+	font-weight: normal;
+	border-bottom: 2px solid black;
+	border-right: 1px solid black;
+	background-color: d6e3f7;
+}
+
+.mytable {
+	border-top: 1px solid black;
+	border-left: 1px solid black;
+	font-size: 13px;
+}

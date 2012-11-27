@@ -1,0 +1,52 @@
+/*****************************************************************
+  文　　件：Web_Article.css
+  文件主题：http://www.meizz.com/Web/Article   样式表定义
+  作　　者：黄方荣（meizz 梅花雪）
+  开始时间：2004-11-7
+
+  ***************************************************************/
+/********* Article 文章具体样式 Begin   ********/
+div.pageHeading
+{
+  height: 24;
+  color: #003099;
+  font-size: 13pt;
+  padding: 0 8 0 8;
+  font-weight: bold;
+  background-image: url("bgHeading.gif"/*tpa=http://www.meizz.com/Images/bgHeading.gif*/);
+  font-family: Microsoft Sans Serif, 宋体;
+  /*filter:alpha(opacity=30, finishOpacity=100, style=1, startX=100, startY=0, finishY=100);*/
+}
+div.pageHeading A
+{
+  font-size: 9pt;
+  color: blue;
+  font-weight: normal;
+}
+
+TD.ArticleContent{padding-right: 2px}
+TD.ArticleExplain{width: 120; border-left: 1px solid #B8D1F8; padding-left: 5;}
+DIV.ArticleExplain{overflow: auto; width:100%; border: 1px solid #E1EDFD;}
+DIV.ArticleExplainHeading{background-color: #E1EDFD;}
+
+DL.Article {}
+DL.Article DT {font-weight: bold; margin: 5px 0px 2px 0.3cm;}
+DL.Article DD {margin-left: 1cm;}
+DL.Article DD.Attention {margin: 5px 0px 0px 0.3cm;}
+DL.Article DD.syntax {padding: 3px 0px 2px 3px; border: 1px solid #B8D1F8;}
+DL.Article DD.syntaxExplain {margin-left: 1.5cm;}
+DD.explain DD.exemple DD.content{line-height: 18px;}
+DL.Article UL{ margin-top: 0px; margin-bottom: 0px;}
+DL.Article DIV {width: 100%;}
+DL.Article DIV TABLE{width: 100%; background-color: #B8D1F8;}/*#E1EDFD*/
+DL.Article DIV TD{background-color: #FFFFFF; padding: 3px 0px 0px 3px;}
+DL.Article DIV TH{font-size: 10pt;}
+DL.Article DD A{color: #000080; font-weight: bold;}
+DL.Article TABLE A{ color: blue; font-weight: normal;}
+
+SPAN.Key {color: #B00000; font-weight: bold;}
+SPAN.Param, TD.Param{ color: blue; font-weight: normal;}
+SPAN.Note{ color: #008000;}
+TD.Param{ width: 80;}
+PRE.Code{color: #0000D0;}
+/********* Article 文章具体样式 End     ********/

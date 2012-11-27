@@ -1,0 +1,13 @@
+@CHARSET "GB18030";
+body {font:normal 12px 宋体}
+a.MzTreeview /* TreeView 链接的基本样式 */ { cursor: hand; color: #000080; margin-top: 5px; padding: 2 1 0 2; text-decoration: none; }
+.MzTreeview a.select /* TreeView 链接被选中时的样式 */ { color: highlighttext; background-color: highlight; }
+#kkk input {
+vertical-align:middle;
+A.MzTreeview
+{
+  font-size: 12px;
+  padding-left: 5px;
+  color:blue;
+}
+}

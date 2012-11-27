@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="tallyBook.pojo.DiaryDetail" table="diary_detail">
+		<id name="diarySno" column="id">
+			<generator class="sequence">
+				<param name="sequence">SEQ_DIARYNO</param>
+			</generator>
+		</id>		 
+		<property name="diaryType" column="type" type="string" />
+		<property name="time" column="time" type="date" />
+		<property name="content" column="CONTENT" type="string" /> 
+	</class>
+</hibernate-mapping>

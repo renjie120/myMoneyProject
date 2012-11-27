@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="stock.pojo.StockHolderOnVO" table="stock_hold_on_t">
+		<id name="holdOnSno" column="HOLD_ON_SNO" type="int">
+			<generator class="sequence">
+				<param name="sequence">STOCK_HOLDON_SEQ</param>
+			</generator>
+		</id>		
+		<property name="stockCode" column="STOCK_NO" type="string" />
+		<property name="profitMoney" column="PROFIT_MONEY" type="double" />
+		<property name="marketMoney" column="MARKET_MONEY" type="double" />
+		<property name="costMoney" column="COST_MONEY" type="double" />
+		<property name="costPrice" column="STOCK_PRICE" type="double" />
+		 <property name="stockNum" column="DEAL_NUM" type="int" />
+		<property name="dealFee" column="DEAL_FEE" type="double" />
+		<property name="fitstBuyTime" column="FIRSTBUYYTIME" type="date" />
+		<property name="sellTime" column="SELLTIME" type="date" />
+		<property name="dealTax" column="DEAL_TAX" type="double" />
+		 <property name="realPrice" column="STOCK_REAL_PRICE" type="double" />
+		<property name="dealType" column="DEAL_TYPE" type="string" />
+		<property name="profit" column="PROFIT" type="double" />
+	</class>
+</hibernate-mapping>

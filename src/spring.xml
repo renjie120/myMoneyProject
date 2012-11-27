@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="formaterBean" class="example.LowerFormater">
+		<property name="title">
+			<value>Hello Spring</value>
+		</property>
+	</bean>
+	 
+	<bean id="printer" class="example.TextPrinter">
+		<property name="formater">
+			<ref bean="formaterBean" />
+		</property>
+		<property name="size">
+			<value type="int">111</value>
+		</property>
+	</bean>
+	
+	
+	<bean id="printer2" class="example.TextPrinter2" parent="printer">
+	</bean>
+
+	<!-- 下面的printer3是测试cglib的动态代理 -->
+	<bean id="printer3" class="cglib.TextPrinter3" parent="printer">
+	</bean>
+	
+	<bean id="myadvice" class="example.MyBeforeAdvice"></bean>
+	
+	<bean id="myafteradvice" class="example.MyAfterAdvice"></bean>
+	
+	<bean id="myCatchException"
+        class="example.CatchException"/>
+	
+	<!-- 下面是一个针对某些方法的顾问，只对sh开头的方法有前置作用。。。 -->
+	<!--  <bean id="exceptionHandlereAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor"> 
+        <property name="advice"> 
+            <ref bean="myCatchException"/> 
+        </property> 
+        <property name="patterns"> 
+            <value>.*.*</value> 
+        </property> 
+ 	 </bean>--> 
+	
+	<!--下面的是演示的java接口动态代理，要指定针对的接口。-->
+	<bean id="printerBean"
+		class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>example.IPrinter</value>
+		</property>
+		<property name="target">
+			<ref local="printer2"/>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>myafteradvice</value>
+				<value>myBeforeAdvisor</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 下面的是演示的cglib的动态代理，针对的是普通类，没有实现接口，要引用cgLib的包 -->
+	<bean id="printer3Bean"
+		class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target">
+			<ref local="printer3"/>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>myafteradvice</value>
+				<value>myBeforeAdvisor</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="springDSN"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName"
+            value="oracle.jdbc.driver.OracleDriver">
+        </property>
+        <property name="url"
+            value="jdbc:oracle:thin:@127.0.0.1:1521:lsq">
+        </property>
+        <property name="username" value="lsqtest"></property>
+        <property name="password" value="lsqtest"></property>
+    </bean>
+	
+	
+	<bean id="jdbcTemplate"
+        class="org.springframework.jdbc.core.JdbcTemplate" abstract="false"
+        lazy-init="false" autowire="default" dependency-check="default">
+        <property name="dataSource">
+            <ref bean="springDSN" />
+        </property>
+    </bean>
+    
+   
+	
+    <bean id="daoUtil" class="tallyBook.dao.DaoUtil">
+		<property name="jdbcTemplate">
+			<ref bean="jdbcTemplate" />
+		</property>  
+	</bean>
+	
+	
+	<!-- 下面的是使用的自动针对满足某些条件的类实现代理。 这种使用的最多！-->
+	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<value>p*</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>myBeforeAdvisor</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 下面的是对全部的bean都加载所有的Advisor，注意不针对advice！！ -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+
+</beans>

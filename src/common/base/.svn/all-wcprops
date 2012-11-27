@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/sqsystem/!svn/ver/4/test/src/common/base
+END
+Initializable.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/sqsystem/!svn/ver/4/test/src/common/base/Initializable.java
+END
+ParamSelect.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/sqsystem/!svn/ver/4/test/src/common/base/ParamSelect.java
+END
+AllSelectContants.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/sqsystem/!svn/ver/102/test/src/common/base/AllSelectContants.java
+END
+SimpleOption.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/sqsystem/!svn/ver/4/test/src/common/base/SimpleOption.java
+END
+SelectAble.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/sqsystem/!svn/ver/4/test/src/common/base/SelectAble.java
+END
+TreeAble.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/sqsystem/!svn/ver/4/test/src/common/base/TreeAble.java
+END
+Initor.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/sqsystem/!svn/ver/4/test/src/common/base/Initor.java
+END
+SpringContextUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/sqsystem/!svn/ver/103/test/src/common/base/SpringContextUtil.java
+END
+InitCache.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/sqsystem/!svn/ver/4/test/src/common/base/InitCache.java
+END
+AllSelect.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/sqsystem/!svn/ver/3/test/src/common/base/AllSelect.java
+END
+BaseAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/sqsystem/!svn/ver/4/test/src/common/base/BaseAction.java
+END
+Contants.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/sqsystem/!svn/ver/4/test/src/common/base/Contants.java
+END
+TreeTool.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/sqsystem/!svn/ver/4/test/src/common/base/TreeTool.java
+END
+MyBaseAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/sqsystem/!svn/ver/4/test/src/common/base/MyBaseAction.java
+END

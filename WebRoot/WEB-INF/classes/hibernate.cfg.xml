@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate
+Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="connection.driver_class">com.p6spy.engine.spy.P6SpyDriver</property>
+		<property name="connection.url">jdbc:oracle:thin:@127.0.0.1:1521:lsq</property>
+		<property name="connection.username">lsqtest</property>
+		<property name="connection.password">lsqtest</property>
+		<property name="connection.pool_size">2</property>
+		
+		<property name="dialect">org.hibernate.dialect.Oracle9Dialect</property>
+		<property name="show_sql">false</property>		
+		<property name="current_session_context_class">thread</property>				
+		<mapping resource="hbm/moneyDetail.hbm.xml"/> 
+		<mapping resource="hbm/diaryDetail.hbm.xml"/> 
+		<mapping resource="hbm/gongguoDetail.hbm.xml"/> 
+		<mapping resource="hbm/moneyType.hbm.xml"/> 
+		<mapping resource="hbm/shopCard.hbm.xml"/> 
+		<mapping resource="hbm/stockConfig.hbm.xml"/> 
+		<mapping resource="hbm/stockDetail.hbm.xml"/> 
+		<mapping resource="hbm/stockHolder.hbm.xml"/> 
+		<mapping resource="hbm/tallyType.hbm.xml"/> 
+	</session-factory>
+</hibernate-configuration>

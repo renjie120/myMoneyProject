@@ -1,0 +1,5 @@
+myOwnLibrary.cache
+myOwnLibrary.flashchart
+myOwnLibrary.jdbc
+myOwnLibrary.mvc
+myOwnLibrary.util

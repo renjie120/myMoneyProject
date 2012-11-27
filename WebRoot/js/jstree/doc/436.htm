@@ -1,0 +1,162 @@
+<HTML>
+  <HEAD>
+    <META name="author" content="黄方荣(meizz·梅花雪)://www.meizz.com">
+    <META http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <META name="keyword" content="meizz,梅花雪中文网,网页编程资料,WEB 编程,梅花雪脚本控件集,TreeView,MzTreeView1.0,TreeView,树">
+    <SCRIPT src="JSAC.asp" tppabs="http://www.meizz.com/Scripts/JSAC.asp" language="JavaScript"></SCRIPT>
+    <LINK href="Global.css" tppabs="http://www.meizz.com/Scripts/Global.css" type="text/css" rel="stylesheet">
+    <LINK href="Web_Article.css" tppabs="http://www.meizz.com/Scripts/Web_Article.css" type="text/css" rel="stylesheet">
+    <SCRIPT LANGUAGE="JavaScript">var TreeViewId="1436";include("Article");</SCRIPT>
+    <TITLE>梅花雪中文网 - WEB 编程 - 梅花雪脚本控件集 - TreeView - MzTreeView1.0</TITLE>
+  </HEAD>
+
+  <BODY>
+    <table border="0" cellPadding="0" cellSpacing="0" width="100%" height="100%">
+      <tr>
+        <td colspan="2" height="20">
+          <div class="pageHeading">
+            <span title="${ArticleVersion}"><a href="javascript:if(confirm('http://www.meizz.com/Web/Catalog/200.htm  \n\n该文件未被 Teleport Ultra 下载，因为 它位于起始地址以设置的边界以外的域或路径中。  \n\n你想要从服务器打开它吗?'))window.location='http://www.meizz.com/Web/Catalog/200.htm'" tppabs="http://www.meizz.com/Web/Catalog/200.htm" title='梅花雪编写的一些模块化的网页脚插件'>梅花雪脚本控件集</a> - <a href="javascript:if(confirm('http://www.meizz.com/Web/Catalog/211.htm  \n\n该文件未被 Teleport Ultra 下载，因为 它位于起始地址以设置的边界以外的域或路径中。  \n\n你想要从服务器打开它吗?'))window.location='http://www.meizz.com/Web/Catalog/211.htm'" tppabs="http://www.meizz.com/Web/Catalog/211.htm" title=''>TreeView</a> - MzTreeView1.0
+            <span style="font-family: 宋体;font-size: 10pt"></span></span>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top" class="ArticleContent">
+          <DL class="Article">
+            <DD class="Attention">MzTreeView 1.0 开发文档
+<dt>文档
+  <dd>开发文档: <a href="javascript:if(confirm('http://www.meizz.com/Web/Article.asp?id=436  \n\n该文件未被 Teleport Ultra 下载，因为 它位于起始地址以设置的边界以外的域或路径中。  \n\n你想要从服务器打开它吗?'))window.location='http://www.meizz.com/Web/Article.asp?id=436'" tppabs="http://www.meizz.com/Web/Article.asp?id=436" target="_blank">http://www.meizz.com/Web/Article.asp?id=436</a><br>控件下载: <a href="javascript:if(confirm('http://www.meizz.com/Web/Download/MzTreeView10.rar  \n\n该文件未被 Teleport Ultra 下载，因为 它位于起始地址以设置的边界以外的域或路径中。  \n\n你想要从服务器打开它吗?'))window.location='http://www.meizz.com/Web/Download/MzTreeView10.rar'" tppabs="http://www.meizz.com/Web/Download/MzTreeView10.rar" target="_blank">http://www.meizz.com/Web/Download/MzTreeView10.rar</a><br>应用示例: <a href="javascript:if(confirm('http://www.meizz.com/Web/Demo/MzTreeView10.htm  \n\n该文件未被 Teleport Ultra 下载，因为 它位于起始地址以设置的边界以外的域或路径中。  \n\n你想要从服务器打开它吗?'))window.location='http://www.meizz.com/Web/Demo/MzTreeView10.htm'" tppabs="http://www.meizz.com/Web/Demo/MzTreeView10.htm" target="_blank">http://www.meizz.com/Web/Demo/MzTreeView10.htm</a>
+
+<dt>说明
+  <dd>MzTreeView 1.0 是数据一次性加载，客户端节点异步展示的WEB脚本树。MzTreeView 1.0 的理论节点数设计上限为十万节点，在节点数三万的情况下页面打开时间小于 3 秒。无限层次无限节点的数的层级组成方式：id parentId。即每个节点除本身的节点id之外还有它的父层节点id，通过这种方式就可以组合成无限层级的树了。<br><br>
+  在 MzTreeView 里都有一个虚的根节点，其ID为0，用户可见的根节点其父节点ID皆为0<br><br>
+  MzTreeView 1.0在数据库库表里的字段名称：<div class="Article"><table border="0" cellspacing="1">
+  <tr><th>字段名</th><th>字段的具体说明</th></tr>
+  <tr><td>id</td><td>节点ID（不可为0，可以是数字或字符）</td></tr>
+  <tr><td>parentId</td><td>本节点的父节点ID（若本节点已为根节点，此处填0）</td></tr>
+  <tr><td>text</td><td>节点的显示文本（一般不允许为空，不过有一种情况例外，即根节点，若根节点文本为空，这个根节点将不会在页面里显示）</td></tr>
+  <tr><td>hint</td><td>节点的说明注解</td></tr>
+  <tr><td>icon</td><td>节点的图标，MzTreeView 1.0允许每个节点拥有不同的图标（对应的名字在类里的icons和iconsExpand定义）</td></tr>
+  <tr><td>data</td><td>节点挂的数据，格式是 param=value&amp;param=value&amp;... url里?后的那串字符串格式，</td></tr>
+  <tr><td>url</td><td>每个节点允许拥有不同的链接，它为空或者为#时，树里这个节点的链接，点击将无反应</td></tr>
+  <tr><td>target</td><td>每个节点的链接允许在不同的target里打开，为空时取类里的默认值</td></tr>
+  <tr><td>method</td><td>点击该链接时所想触发的脚本语句</td></tr>
+  </table>特注：每个字段值中不可有冒号： 不可以换行 引号酌情考虑应不与节点字符串的引号相冲突<br><br>
+
+<dt>设计模式
+  <dd>为了达到能够在浏览器中快速打开多节点树的页面，我做了很多的优化与创新，下面我将详细解说几项最重要的部分：<br><br>
+  <ul>
+    <li><b>数据一次性加载</b> 首先我要说的就是数据的一次性加载。在目前的 B/S 架构开发中对于多节点多层次的树，特别是树节点量超过两千的情况下，几乎都是采取数据异步加载来达到目的，即用户需要展开某个节点时，再从服务器端加载下级子节点的数据，数据异步加载最为经典的例子就是 MSDN 网站左边的目录树了。异步加载的优点在于可以扩充到无限级无限节点树，树的数据来源可以多样化（数据库或XML文件）等，但是它的缺点也是非常多的：设计模式比数据一次性加载要复杂得多，要考虑到 Browser/Server 之间的应答，要判断子节点是否含有孙节点，后台数据源的层级关系模型等。对网络传输的信赖性太大，每个节点的展开都需要连一次 Server，只要在取某节点数据时网络出现问题，就会导致该节点及其以下的子节点加载失败。而采取数据一次加载的模式只要一次加载成功，服务器就可以不用管它了，服务器压力减轻，脚本设计则完全独立，对整棵树节点的检索可以在客户端完成，节点展开响应速度快等等优势，因此在节点数不多的情况下数据一次性加载更有优势，那么这个节点数不多不多到底多少节点量为平衡点呢？就 ASP.net 里带的那个 TreeView 来说，在一两千节点以下一次性加载比较具有优势，而　MzTreeView 1.0 在节点量三万至五万以非常具有优势。<br><br>
+    <li><b>节点信息的压缩传输</b> 在浏览器里显示的树结构其实都是一个个 HTML 元素组合起来的，在 WEB 页面里的树都是根据树节点的信息组合成一串的 HTML 元素列来显示，这一步从节点信息到 HTML 的转化可以在两个地方生成：一个是在服务器端，一个是在客户端。在服务器端生成的优点在于不须考虑客户端的浏览器的兼容性，节点信息的可控性非常强，但是它的缺点也是非常大的：加重服务器的负担，增加网络传输量。在服务器端直接生成树节点的 HTML 给服务器带来的压力是显而易见的，也是非常巨大的，估计只要有几十个并发连接就能让服务器暂时停止响应了。这种直接在服务器生成树的做法在实际运用环境中也有人使用，不过本人非常不赞成这种做法。当然也有人直接将树生成为一个静态文件放在服务器端，这种做法对于树节点相对固定不变的情况还是非常有利的，只需要生成一次，以后就不需要再生成了，服务器的压力也非常小，但它的弊病在于可变化性太小，比如说不同的权限能看到的树节点的不同这种情况，用这种生成静态树放在服务器端的做就没有办法解决，且不管是服务器端动态计算还是直接生成静态树文件放在服务器端都有一个避免不了的问题就是网络传输量巨大。可以计算一下，一个树点所需要的HTML字符量大约300到600字节之间。即含有一千节点的树的网页大小就有300K到600K，给网络造成的压力是非常巨大的，所以MzTreeView 1.0采用了节点信息的压缩传输，大至一千节点的总传输量在30K左右，这可以差了一个数量级呀。本树将每个节点所必要的信息组合成一个字符串序列，传递到客户端，然后在客户端再用客户端脚本对这些信息进行分析，再生成一个个的节点HTML，这也符合了WEB的分散计算的原理，当然服务器端可以有选择性输出部分节点，这样又做到节点的灵活多变性。<br><br>
+    <li><b>传输的节点信息的可扩展性</b> 服务器端将节点的必要信息组合成一个字符串序列传递到客户端，然后客户端再用脚本对这个字符串序列进行分析，生成树的节点，那么这个字符串序列对整个树的生成的效率就有重要的影响了。我也参照过很多组串传输的例子，在一般的做法当中大多采用函数的参数方式传递。比如说定义一个函数 funName(p1, p2, p3, ...)，然后服务器组串的时候就按位置给定数据。这种组串的弊病是非常大的，首先就是位置绝对错不得，只要有一个位置数据出错，这个节点的信息就乱了，对于那些在函数里已经定义的但节点里没有的信息也得用空字符串补上，诸如：(p1, "", p3, p4, "", "", "")，且万一这种组串的对应分析函数发生了变化，那么这种串就算是废了，得重新定义服务器端的字符串位置序列了，可以说这种组串的方式可扩展性极差。<br>&nbsp; &nbsp; 节点信息组串传输的另一种常用模式就是XML。XML以它的无限可扩展性已惭有代替HTML称霸WEB的味道了。XML最大的优点就在于它的无限可扩展性，可以用任意的TagName名，可以有任意的Attribute名，节点与子节点已经有层级的关系，用XML来做WEB树的数据源其实是最理想的，MSDN的资源目录树就是采用XML作为传递的字符串，它唯一的不足之处就是不是所有浏览器都能很好地支持它，特别是在一些低版本的浏览器中，所以我只好忍痛割爱没有启用XML作为中间的传媒。那么是不是有可能结合XML的扩展性对第一种组串的方式进行改进呢？当我愁眉不展的时候，HTML里的STYLE样式表写法跳入我眼，样式的写法是"param1: value1; param2: value3; ..."，哈哈，这不是现成地给我指明了路吗？这种写法拥有XML的可扩展性，位置顺序的随意性，又是传统的长字符串，正合我意也！服务器给定这种数据源字符串，我不光可以在TreeView里用它，还可以直接做Outlook Bar，下拉式层级菜单，右键层级菜单的数据源，豁然开朗也！我写了一个函数专门解析这种文本：getAttribute()。<br><br>
+    <li><b>客户端节点数据的存储方式及快速检索</b> 现在数据源准备好了，数据传输也已做到最大优化了，下面就是客户端的脚本解析了，而这一步也正是树生成的效率瓶颈所在。由于我没有采用XML做为数据源，所以我这里就不讨论XML+XSL和XMLDOM的模式，而只考虑HTML+DOM模式了。在HTML+DOM模式下客户端存储的方式有很多种，我就曾经看到过一种直接将字符串输出在多行文本框<A href="javascript:if(confirm('http://www.meizz.com/Web/Article/302/406.htm  \n\n该文件未被 Teleport Ultra 下载，因为 它位于起始地址以设置的边界以外的域或路径中。  \n\n你想要从服务器打开它吗?'))window.location='http://www.meizz.com/Web/Article/302/406.htm'" tppabs="http://www.meizz.com/Web/Article/302/406.htm">&lt;textarea&gt;</A>里的，但归究起来最常用的方式就是用一个数组来存放节点信息，不过就算是用数组也是种类多多，比如说数组里套数组，节点通过记录父节点在数组里的索引号表示层级的等等，说到数组存放树节点模式，我推荐阿信写的那棵树。在服务器端组织好脚本及节点字符串，客户端浏览器加载这个页面的时候顺序执行其里面的脚本，将一个个节点做最初步的解析，然后再一个个地ADD到数组中去。这种流程看起来似乎没有什么问题，在很多的传统C/S结构编程中也就这种模式，但是随着节点数的增多，这种流程在B/S里的缺点就出现了：脚本的执行效率不如强语言高！我做过测试，在5000节点的数据量时这一步操作将耗时１秒钟，也许你认为这１秒钟不算长，哪里有5000这么多节点的树？但对于一个程序员来说，严谨是第一位的，若存在优化的可能性，情况出现的可能性，我们就得将它考虑到。那么有没有可能再进一步优化呢？当然有，否则我就用不着这么大费口舌在这里讲了。既然在脚本里执行 for 循环插入数组效率不高那我不用循环，且考虑到在数组里这么多节点中搜索我想要的某几个节点，还得用循环，所以我干脆就不再用数组来存放树节点了，那用什么呢？说到这里我得插几句题外话，客户端脚本也可以写一些类，虽说写出来的类没有强语言那么好，继承性不好等，但脚本终究还是可以写出一些简单的类的。类可以定义属性，也可以定义方法，并且访问属性的时候可以通过属性名下标直接访问到属性值，关于脚本里如何写类，大家可以参考我在JavaScript和VBScript里对这方面的详细说明。呵呵，说了这么多的题外话，不过相信大家也猜到了，新的节点存储方式就是类的属性自定义扩展方式。这种存储方式随着页面的打开，页面里的脚本被执行，类的属性值不需要做任何添加的动作就直接写到内存当中，比数组模式少去了ADD操作，这一步从字符串到内存的时间就是页面打开的时间，我测试了一下，5000节点的树用这种方式打开，只需0.1秒呀，与数组模式速度整整差了一个数量级呀！且这种模式还有一种好处，在几千个节点里要找到目标节点，只需要知道节点对应的属性名，一步就可以直接找到。<br>&nbsp; &nbsp; 客户端树节点存储模式说清楚了，那节点的快速检索也就清楚了。已知节点名即在类里的属性名的话，一步就找到了该节点，不过为了配合下一节的异步展示，我的检索就没有这么简单了。试想在几千或者几万个节点里要快速地找出符合条件的几十个节点，这一步的耗时可想而知了，首先就得排除for循环法，for循环的效率在数组模式里大家就看到了，这一步操作特别在总节点数多的情况下就能让使用者等疯掉，显然得另想办法。于是我想到了正则表达式里的字符串模式匹配<A href="javascript:if(confirm('http://www.meizz.com/Web/Article/406/67.htm  \n\n该文件未被 Teleport Ultra 下载，因为 它位于起始地址以设置的边界以外的域或路径中。  \n\n你想要从服务器打开它吗?'))window.location='http://www.meizz.com/Web/Article/406/67.htm'" tppabs="http://www.meizz.com/Web/Article/406/67.htm">match()</A>，我将所有的节点名（即类的属性名）<A href="javascript:if(confirm('http://www.meizz.com/Web/Article/406/61.htm  \n\n该文件未被 Teleport Ultra 下载，因为 它位于起始地址以设置的边界以外的域或路径中。  \n\n你想要从服务器打开它吗?'))window.location='http://www.meizz.com/Web/Article/406/61.htm'" tppabs="http://www.meizz.com/Web/Article/406/61.htm">join()</A>成一个大字符串，然后再用正则表达式匹配，一步就找出了想要的节点了。经测试，在三万节点里找30个节点对象耗时小于0.1秒！<br><br>
+    <li><b>异步展示</b> 再来讲一下节点字符串被解析之后转化成HTML元素的这一步操作。上面已经有过一个计算，表达1000节点的树的HTML字符量就有300K-600K之多，且这一步只能一个节点一个节点慢慢地生成，没有什么取巧的办法，想快点也只能是减小单个节点的HTML元素量罢，不过最快也得1-3秒每千节点呀，这也是没有法子的事，谁叫DOM的效率不高呢！总得想个什么法子吧，否则象5000节点量的树让使用者等上个半分钟一分钟的，谁也受不了呀！因此我想出异步展示这招：页面加载时并不立即生成所有节点的HTML元素，而是用户展开多少节点就生成多少节点，节点的生成发生在用户展开这个节点的时候。使用者在页面打开的时候并不会立即把所有的节点都一次全部展开，而是一级级地往下展开的，就象你查看windows注册表一样，想看哪级才会去展开哪一级，这样我就只需要在你展开那级的时候把这一级的节点转化成HTML即可，每次转化的节点只有几十分甚至只有几个而已，消除了使用者的等待时间。经过上面这几个环节，终于一棵实用性，效率，扩展性俱佳的WEB TreeView出世了。<br><br>
+    <li><b>采用文字竖线</b> 每个浏览器随着使用客户的不同，而总会产生不同的设置，其中有一项就是客户端设置每次访问都检查网页新版本，即客户端不缓存。这个设置对一般的应用来说问题不会很大，但是对于使用图片作为竖线的树来说随着节点总数的增多，图片的使用量也就跟着巨量增加，可能会使用几千甚至几万个小图片，每张图片是都很小，但量一大的话，将会严重影响树的快速展示，因此针对这种情况就得换一种模式来展现了，那就是文字竖线，用文字加样式就可以解决这个问题。我加了一个变量：MzTreeView.wordLine（布尔型，默认值为false），当网速过慢或者没有使用本地缓存时这个属性会自动设置成 true 而以文字代替图片完成竖线（注：Opera 浏览器不支持文字竖线模式），当然你也可以一开始就强行设置值为 true，这样树就会始终用文字竖线了。
+  </ul>
+
+<dt>属性
+  <dd>MzTreeView 类的一些属性：<div class="Article"><table border="0" cellspacing="1">
+  <tr><th>属性名</th><th>类型</th><th>属性的具体说明</th></tr>
+  <tr><td>MzTreeView.nodes</td><td>集合</td><td>服务器端给树指定数据源时数据存放的对象，具体存放格式如：<br>MzTreeViewHandle.nodes["parentId_nodeId"] = "text: nodeText; icon: nodeIcon; url: nodeURL; ...";<br></td></tr>
+  <tr><td>MzTreeView.url</td><td>地址字符串</td><td>可读写，树缺省的URL，默认值是 #</td></tr>
+  <tr><td>MzTreeView.target</td><td>目标框架名</td><td>可读写，树缺省的链接target，默认值是 _self</td></tr>
+  <tr><td>MzTreeView.name</td><td>字符</td><td>只读，树的实例名，同树实例化时作为参数传入(大小写敏感)：<br>var Tree = new MzTreeView("Tree");</td></tr>
+  <tr><td>MzTreeView.currentNode</td><td>树节点</td><td>只读，树当前得到焦点的节点对象</td></tr>
+  <tr><td>MzTreeView.icons</td><td>集合</td><td>树所使用的所有图标存放</td></tr>
+  <tr><td>MzTreeView.iconsExpand</td><td>集合</td><td>树里展开状态的图标存放</td></tr>
+  <tr><td>MzTreeView.colors</td><td>集合</td><td>树里使用到的几个颜色存放</td></tr>
+  </table></div><br>
+
+  MzTreeView 在客户端的节点所拥有的属性：<div class="Article"><table border="0" cellspacing="1">
+  <tr><th>属性名</th><th>属性的具体说明</th></tr>
+  <tr><td>node.id</td><td>数字文本，节点的ID</td></tr>
+  <tr><td>node.parentId</td><td>数字文本，节点对应的父节点ID</td></tr>
+  <tr><td>node.text</td><td>文本，节点的显示文本</td></tr>
+  <tr><td>node.hint</td><td>文本，节点的注释说明</td></tr>
+  <tr><td>node.icon</td><td>文本，节点对应的图标</td></tr>
+  <tr><td>node.path</td><td>文本，节点在树里的绝对路径：0_1_10_34</td></tr>
+  <tr><td>node.url</td><td>文本，该节点的 URL</td></tr>
+  <tr><td>node.target</td><td>文本，该节点链接的目标框架名</td></tr>
+  <tr><td>node.data</td><td>文本，该节点所挂载的数据</td></tr>
+  <tr><td>node.method</td><td>文本，该节点的点击对应处理语句</td></tr>
+  <tr><td>node.parentNode</td><td>对象，节点的父节点对象</td></tr>
+  <tr><td>node.childNodes</td><td>数组，包含节点下所有子节点的数组</td></tr>
+  <tr><td>node.sourceIndex</td><td>文本，服务器给予的数据里对象的 parentId_nodeId 的组合字符串</td></tr>
+  <tr><td>node.hasChild</td><td>布尔值，指该节点是否有子节点</td></tr>
+  <tr><td>node.isLoad</td><td>布尔值，本节点的子节点数据是否已经在客户端初始化</td></tr>
+  <tr><td>node.isExpand</td><td>布尔值，节点的展开状态</td></tr>
+  </table></div>
+
+<dt>方法
+  <dd>MzTreeView 类的一些方法：<div class="Article"><table border="0" cellspacing="1">
+  <tr><th>方法名</th><th>方法的具体说明</th></tr>
+  <tr><td>MzTreeView.toString()</td><td>类的默认初始运行</td></tr>
+  <tr><td>MzTreeView.buildNode(id)</td><td>将该节点的所有下级子节点转换成 HTML 并在网页上体现出来</td></tr>
+  <tr><td>MzTreeView.nodeToHTML(node, AtEnd)</td><td>将 node 转换成 HTML</td></tr>
+  <tr><td>MzTreeView.load(id)</td><td>从数据源里加载当前节点下的所有子节点</td></tr>
+  <tr><td>MzTreeView.nodeInit(sourceIndex, parentId)</td><td>节点的信息初始，从数据源到客户端完整节点的转化</td></tr>
+  <tr><td>MzTreeView.focus(id)</td><td>聚集到某个节点上</td></tr>
+  <tr><td>MzTreeView.expand(id[, sureExpand])</td><td>展开节点（包含下级子节点数据的加载初始化）</td></tr>
+  <tr><td>MzTreeView.setIconPath(path)</td><td>给节点图片设置正确的路径</td></tr>
+  <tr><td>MzTreeView.nodeClick(id)</td><td>节点链接点击时同时被触发的点击事件处理方法</td></tr>
+  <tr><td>MzTreeView.upperNode()</td><td>跳转到当前聚集节点的父级节点</td></tr>
+  <tr><td>MzTreeView.lowerNode()</td><td>跳转到当前聚集节点的子级节点</td></tr>
+  <tr><td>MzTreeView.pervNode()</td><td>跳转到当前聚集节点的上一节点</td></tr>
+  <tr><td>MzTreeView.nextNode()</td><td>跳转到当前聚集节点的下一节点</td></tr>
+  <tr><td>MzTreeView.expandAll()</td><td>展开所有的树点，在总节点量大于500时这步操作将会比较耗时</td></tr>
+  </table></div><br>
+
+<dt>示例
+  <dd class="exemple"><pre class="Code">
+&lt;script language="JavaScript"
+  src="http://www.meizz.com/Web/Plugs/MzTreeView10.js"&gt;&lt;/script&gt;
+&lt;base href="http://www.meizz.com/Web/"&gt;
+&lt;style&gt;
+A.MzTreeview
+{
+  font-size: 9pt;
+  padding-left: 3px;
+}
+&lt;/style&gt;
+&lt;script language="JavaScript"&gt;
+  var tree = new MzTreeView("tree");
+
+  tree.icons["property"] = "property.gif";
+  tree.icons["css"] = "collection.gif";
+  tree.icons["book"]  = "book.gif";
+  tree.iconsExpand["book"] = "bookopen.gif"; <SPAN class="Note">//展开时对应的图片</SPAN>
+
+  tree.setIconPath("http://www.meizz.com/Icons/TreeView/"); <SPAN class="Note">//可用相对路径</SPAN>
+
+  tree.nodes["0_1"] = "text:WEB 编程";
+  tree.nodes["1_100"] = "text:代码示例; data:id=100"; 
+  tree.nodes["1_200"] = "text:梅花雪脚本控件集; data:id=200";
+  tree.nodes["1_310"] = "text:CSS; icon:css; data:id=310"; 
+  tree.nodes["1_320"] = "text:DHTML; data:id=320"; 
+  tree.nodes["1_300"] = "text:HTML; data:id=300"; 
+  tree.nodes["1_400"] = "text:JavaScript; icon:book; data:id=400";
+  tree.nodes["320_322"] = "text:属性; icon: property; data:id=322"; 
+  tree.nodes["320_323"] = "text:方法; data:id=323"; 
+  tree.nodes["320_324"] = "text:事件; icon:event; data:id=324"; 
+  tree.nodes["320_325"] = "text:集合; data:id=325"; 
+  tree.nodes["400_407"] = "text:对象; data:id=407"; 
+  tree.nodes["400_406"] = "text:方法; data:id=406"; 
+  tree.nodes["400_408"] = "text:运算符; data:id=408"; 
+  tree.nodes["400_409"] = "text:属性; data:id=409"; 
+  tree.nodes["407_1140"] = "text:Date; url:Article.asp; data:id=140";
+  tree.nodes["406_1127"] = "text:toString; url:Article.asp; data:id=127";
+  tree.nodes["408_1239"] = "text:||; url:Article.asp; data:id=239";
+  tree.nodes["409_1163"] = "text:E;  url:Article.asp; data:id=163";
+
+  tree.setURL("Catalog.asp");
+  tree.setTarget("MzMain");
+  document.write(tree.toString());    <SPAN class="Note">//亦可用 obj.innerHTML = tree.toString();</SPAN>
+&lt;/script&gt;
+  </pre>
+
+        </td>
+      </tr>
+    </table>
+
+  </BODY>
+</HTML>

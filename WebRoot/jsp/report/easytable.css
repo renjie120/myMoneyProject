@@ -1,0 +1,44 @@
+.divClass {
+	height: 250px;
+	width: 100%;
+	overflow: auto;
+}
+
+td {
+	height: 22px;
+	border-bottom: 1px solid black;
+	border-right: 1px solid black;
+	cursor: default;
+}
+
+th {
+	height: 20px;
+	font-size: 12px;
+	font-weight: normal;
+	border-bottom: 2px solid black;
+	border-right: 1px solid black;
+	background-color: #999999;
+	font-color:red;
+}
+
+table {
+	border-top: 1px solid black;
+	border-left: 1px solid black;
+	font-size: 13px;
+}
+
+input {
+	border: 1px solid black;
+}
+
+.TrOdd {
+	font-family: "宋体";
+	font-size: 12px;
+	background-color: #FFFFFF;
+}
+
+.TrEven {
+	font-family: "宋体";
+	font-size: 12px;
+	background-color: #CCCCCC;
+}
