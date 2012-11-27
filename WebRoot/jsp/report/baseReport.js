@@ -31,6 +31,16 @@ function setDefineTime(obj){
 		$('#showdateDiv2').hide();
 	}
 }
+
+function showTypes(obj){
+	if(obj.value=='fst'){
+		$('#firstType').show();
+		$('#secondType').hide(); 
+	}else{
+		$('#firstType').hide();
+		$('#secondType').show(); 
+	}
+}
 //»Øµ÷º¯Êý¡£
 function consoleDetails(data) {
 	var ans = "";

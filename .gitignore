@@ -1,3 +1,4 @@
 .myeclipse/
 .settings/
 .mymetadata
+*.bak

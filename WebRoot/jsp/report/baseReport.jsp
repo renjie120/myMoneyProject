@@ -1,10 +1,22 @@
 <%@ page language="java" import="java.util.*" pageEncoding="GBK"%>
 <%@ page  import="tallyBook.dao.CommonSelDao" %>
+<%@ page import="tallyBook.dao.TallyTypeDao"%>
+<%@ page import="tallyBook.pojo.TallyType"%>
+<%@ page import="tallyBook.dao.CommonSelDao"%>
+<%@ page import="myOwnLibrary.util.Util"%>
 <%@ include file="/jsp/Base.jsp"%>
 <%
 CommonSelDao dao = new CommonSelDao();
 List years = dao.getAllYears();
 List months = dao.getAllMonths();
+
+	TallyTypeDao tallyTypeDao = new TallyTypeDao();
+	CommonSelDao selDao = new CommonSelDao();
+	List tallyTypes = selDao.getAllTallyTypes();
+	List tallyTypes2 = tallyTypeDao
+	.doGetAllTallyTypes("from tallyBook.pojo.TallyType where parentCode is null");
+
+	
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -25,7 +37,7 @@ List months = dao.getAllMonths();
 			<tr><td colspan="5">
 				<table width="100%"><tr><td>
 					<div id="showdateDiv">
-					选择年份
+					 选择年份
 					<select id="year" style="width: 150px" onchange="resetChooseReport();">
 						<%if(years!=null){ 
 							for(int i=0;i<years.size();i++){
@@ -45,8 +57,9 @@ List months = dao.getAllMonths();
 						%>
 							<option value="<%=objs[0].toString() %>"><%= objs[1].toString()%></option>
 						<%} }%>
-					</select>
+					</select>					
 					</div>
+				
 					<div id="showdateDiv2" style="display:none">
 					自定义时间:<input type="checkbox" onclick="setDefineTime(this);">
 					<table WIDTH="100%"><tr  WIDTH="100%">
@@ -84,6 +97,33 @@ List months = dao.getAllMonths();
 							收入统计
 						</option>
 					</select>
+					</td></tr>
+					<tr><td colspan="5">	
+					<table width='100%'><tr><td>
+					<select onchange='showTypes(this)'>
+					<option value='fst'>一级类型</option>
+					<option value='sec'>二级类型</option></select>
+					</td></tr>
+					<tr><td>
+					<div style='width:800px' id='firstType'><font size="2"> 
+					<%for(Object o:tallyTypes2){
+							TallyType tp  =(TallyType)o;
+							%>
+						<input type='checkbox' name='tp' value="<%=tp.getTallyTypeSno()%>" checked><%=tp.getTallyTypeDesc()%>
+						<%  
+						}
+					%></font>
+					</div>
+					<div  style='width:800px;display:none' id='secondType' ><font size="2"> 
+					<%for(Object o:tallyTypes){
+							TallyType tp  =(TallyType)o;
+							%>
+						<input type='checkbox' name='tp' value="<%=tp.getTallyTypeSno()%>" checked><%=tp.getTallyTypeDesc()%>
+						<%  
+						}
+					%></font>
+					</div>
+					</td></tr></table>
 					</td></tr></table></td></tr>
 				<tr>
 				<td colspan="3">
