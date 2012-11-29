@@ -56,7 +56,7 @@ public class DwrBo {
 	public List getDetailsByTimeAndBigSort(String year,String month,String bigType){
 		StringBuffer buf = new StringBuffer();
 		dao = (DaoUtil)SpringContextUtil.getBean("daoUtil"); 
-		String[] startAndEndTimes = MoneyDetailsReport.getStartAndEndTime(year,month);
+		String[] startAndEndTimes = MoneyDetailsReport.getStartAndEndTimeOneMonth(year,month);
 		buf.append("select to_char(t.money_time,'yyyy-MM-dd'),to_char(t.money,'99999.00'),decode(t.money_desc,null,' ',t.money_desc)	");
 		buf.append("	  from money_detail_view t                              ");
 		buf.append("	  where t.money_time >= to_date('"+startAndEndTimes[0]+"', 'yyyy-mm-dd') ");

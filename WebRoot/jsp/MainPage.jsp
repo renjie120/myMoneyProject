@@ -19,7 +19,7 @@ ul#icons span.ui-icon {float: left; margin: 0 4px;}
 #tabs div {height:590px;width:100%;overflow-y:hidden;}
 </style> 
 </head>
-<body style="overflow:hidden;">
+<body style="overflow:auto;">
 <input type="hidden" id="path" value="<%=appPath%>" />
 <div id="tabs">
 <ul>

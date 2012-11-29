@@ -7,7 +7,7 @@ function resetChooseReport(){
 	$('#way option:nth-child(1)').attr("selected",true);
 }
 
-function  getReport(){
+function  getReport(){ 
 	switch($('#way').val()){
 		case '1':test(); break;
 		case '2':test2(); break;
@@ -30,7 +30,7 @@ function setDefineTime(obj){
 		$('#showdateDiv').show();
 		$('#showdateDiv2').hide();
 	}
-}
+} 
 
 function showTypes(obj){
 	if(obj.value=='fst'){
@@ -40,6 +40,20 @@ function showTypes(obj){
 		$('#firstType').hide();
 		$('#secondType').show(); 
 	}
+}
+
+function checkAll(obj){
+	if(obj.checked)
+		$('input[type=checkbox][name=tp]').attr('checked',true);
+	else
+		$('input[type=checkbox][name=tp]').attr('checked',false);
+}
+
+function checkAllYear(obj){
+	if(obj.checked)
+		$('input[type=checkbox][month=1]').attr('checked',true);
+	else
+		$('input[type=checkbox][month=1]').attr('checked',false);
 }
 //回调函数。
 function consoleDetails(data) {
@@ -58,9 +72,29 @@ function consoleDetails(data) {
 	ansBuf.push("<table>");
 	$("#msgDiv").html(ansBuf.join("")).animate({left: 50,opacity:'show'},500); 
 }
+
+function getQueryStr(){
+	var queryStr =  "year=" + $("#year").val()+"&lxtp="+$('#lxtp').val();
+	var s = [];
+	 $('input[name=tp]:checked:visible').each(function(){
+		s.push(this.value);
+	});
+	queryStr+="&tps="+s.join(',');  
+	s = [];
+	 $('input[name=month]:checked').each(function(){
+		s.push(this.value);
+	});
+	if(s.length<1){
+			alert('请至少选择一个月份！');return false;
+	}
+	queryStr+="&month="+s.join(',');   
+	return queryStr;
+}
 //查看统计图。
 function test() {	
-	var queryStr = "year=" + $("#year").val() + "&month=" + $("#month").val();
+	var queryStr = getQueryStr(); 
+	if(!queryStr)
+		return false;
     //得到当前月份的每天的开支金额折线图	
 	$.ajax({url:window.path+"/report!reportByMonth.action", 
 	data:queryStr, 
@@ -88,7 +122,9 @@ function test() {
 }
 
 function  test2(){
-	var queryStr = "year=" + $("#year").val() + "&month=" + $("#month").val();
+	var queryStr = getQueryStr();
+	if(!queryStr)
+		return false;
     //得到当前月份的分类别的收入
     
      //得到当前月份的小类别的支出
@@ -117,7 +153,9 @@ function  test2(){
 }
 
 function test3(){
- 	var queryStr = "year=" + $("#year").val() + "&month=" + $("#month").val();
+	var queryStr = getQueryStr();
+	if(!queryStr)
+		return false;
    //得到当前月份的小类别的收入
 	$.ajax({url:window.path+"/report!reportInByTallyType.action", 
 		data:queryStr, 

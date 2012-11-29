@@ -93,10 +93,6 @@ $(function() {
 					bclass : 'add',
 					onpress : testButton
 				}, {
-					name : '信用记录',
-					bclass : 'add',
-					onpress : testButton
-				}, {
 					name : '导出',
 					bclass : 'add',
 					onpress : testButton
@@ -264,11 +260,7 @@ function testButton(com, grid) {
 		case '参数配置' :
 			openNewWin(window.path + "/jsp/Config.jsp",
 					"dialogWidth=400px;dialogHeight=300px;");
-			break;
-		case '信用记录' :
-			openNewWin(window.path + "/grid!getShopCardInfos.action",
-					"dialogWidth=700px;dialogHeight=300px;");
-			break;
+			break; 
 		case '删除' :
 			var selected_count = $('.trSelected', grid).length;
 			if (selected_count == 0) {
