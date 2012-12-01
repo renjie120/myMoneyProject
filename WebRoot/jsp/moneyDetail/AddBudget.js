@@ -59,33 +59,32 @@
 	    });
  	}
  	
- 	function weishenme(){
- 		var queryStr = $('#form2').serialize(); 
- 		var td1 = $('input[type=radio]:checked').parent().next('td');
- 		var td2 = td1.next('td');
- 		var _y = td1.html()*1;
- 		var _m = td2.html()*1;   
- 		 $.ajax({
-	        url : appPath+"/BudgetAction!deleteBudgetDetail.action?year="+_y+"&month="+_m, 
-	        success:function(x){
-	        	alert(x);
-	        	location.reload();
-	        } 
-	    });  
+ 	function weishenme(y,m,obj){ 
+ 			if(confirm("确定要删除么？")){
+			var _y = y*1;
+ 			var _m =  m*1;   
+			 $.ajax({
+					url : appPath+"/BudgetAction!deleteBudgetDetail.action?year="+_y+"&month="+_m, 
+					success:function(x){ 
+					     $('tr[trid='+obj+']').remove();
+					} 
+				});  
+			}
  	}
  	
- 	function addDetail(){   
+ 	function addDetail(){    
  		var queryStr = [];
  		$('#budgettypes input').each(function(){
  			queryStr.push($(this).attr('name')+","+$(this).val()+";");
- 		});  
+ 		});   
+		queryStr.push("&year="+$('#year').val()+"&month="+$('#month').val());
  		 $.ajax({
 	        url : appPath+"/BudgetAction!saveBudgetDetail.action?budgetName="+queryStr.join(''), 
 	        success:function(x){
-	        	alert(x);
-	        	location.reload();
+	        	alert(x); 
+				location.reload();
 	        } 
-	    });    
+	    });  
  	}
  	
  	

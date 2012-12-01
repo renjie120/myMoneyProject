@@ -29,6 +29,13 @@ function showColor(){
 	 	}
 	 });
 }
+
+function noSplit(obj,isTrue){ 
+if(isTrue)
+			location.href= AAA+'/detailReport!reportDetail.action?splitNo=no';
+else
+			location.href= AAA+'/detailReport!reportDetail.action';
+}
 //返回详细的报表展示信息.
 function openType(type){
 	location.href= AAA+'/detailReport!reportDetail.action?bigType='+type;

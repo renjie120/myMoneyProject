@@ -3,6 +3,9 @@ $(function(){
 	var now = new Date();
 	var firstOfThisMonth = now.getFullYear()+'-'+ (now.getMonth()+1)+'-01';
 	var firstOfNextMonth = now.getFullYear()+'-'+ (now.getMonth()+2)+'-01';
+	if(now.getMonth()+2>12){
+		 firstOfNextMonth = (now.getFullYear()+1)+'-01-01';
+	}
 	//定义连接的数组
 	var hrefs = [p+'/jsp/Login.jsp',
 			p+'/jsp/desktop/desktop.jsp',

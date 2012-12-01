@@ -3,3 +3,4 @@
 .mymetadata
 *.bak
 *.class
+WebRoot/WEB-INF/classes/

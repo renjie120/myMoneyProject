@@ -18,6 +18,7 @@ public class MoneyDetail extends BasePojo{
 	 */
 	private String booktype;
 	private int splitMonths;
+	private double realMoney;
 	/**
 	 * 查询记录的最大金额限制
 	 */
@@ -179,5 +180,11 @@ public class MoneyDetail extends BasePojo{
 	}
 	public void setSplitNoStr(String splitNoStr) {
 		this.splitNoStr = splitNoStr;
+	}
+	public double getRealMoney() {
+		return realMoney;
+	}
+	public void setRealMoney(double realMoney) {
+		this.realMoney = realMoney;
 	}
 }

@@ -15,6 +15,7 @@
 	Map typeToPer = (Map) request.getAttribute("typeToPer");
 	Map typeToMoney = (Map) request.getAttribute("typeToMoney");
 	String nolinktitle = (String) request.getAttribute("nolinktitle");
+	String splitNo = (String) request.getAttribute("splitNo");
 	String allInAndOut = (String) request.getAttribute("allInAndOut");
 	String bigType = (String) request.getAttribute("bigType");
 	Map allTypeName = (Map) request.getAttribute("allTypeName");
@@ -53,6 +54,15 @@
 			<button   id='showStatisBtn'>
 				仅显示统计
 			</button>
+			<%if("no".equals(splitNo)){%>
+			<button onclick="noSplit(this,false)">
+				保持拆分
+			</button>
+			<%}else{%>
+			<button onclick="noSplit(this,true)">
+				不拆分
+			</button>
+			<%}%>
 			<table width="93%" height="100%" id='reportTable'>
 				<thead>
 					<th>

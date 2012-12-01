@@ -140,7 +140,7 @@ public class MoneyContrastReport {
 	 */
 	public String reportDetail() { 
 		ConstarctReportDao dao = new ConstarctReportDao();
-		List ans = dao.getDetailReport(year,month,bigType,smallType);
+		List ans = dao.getDetailReport(year,month,bigType,smallType,true);
 		HttpServletRequest request = ServletActionContext.getRequest();
 		//处理查询的结果集合得到需要的字符串结果。
 		parseResustMap(ans,request);		 
@@ -153,7 +153,7 @@ public class MoneyContrastReport {
 	 */
 	public String reportDetailInBigType() { 
 		ConstarctReportDao dao = new ConstarctReportDao();
-		List ans = dao.getDetailReport(year,month,bigType,smallType);
+		List ans = dao.getDetailReport(year,month,bigType,smallType,true);
 		HttpServletRequest request = ServletActionContext.getRequest();
 		//处理查询的结果集合得到需要的字符串结果。
 		parseResustMap(ans,request);		 

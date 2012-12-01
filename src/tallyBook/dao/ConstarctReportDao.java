@@ -591,11 +591,16 @@ public class ConstarctReportDao {
 		return ans;
 	}
 	
-	public List getAllInAndOut() {
+	public List getAllInAndOut(boolean checkSplitNo) {
 		List ans = new ArrayList();
 		StringBuffer buf = new StringBuffer();
-		buf.append("select sum(decode(type_id, 1, money, 0)) inmoney, ");  
-		buf.append("       sum(decode(type_id, 2, money, 0)) outmoney ");  
+		if(checkSplitNo){
+			buf.append("select sum(decode(type_id, 1, money, 0)) inmoney, ");  
+			buf.append("       sum(decode(type_id, 2, money, 0)) outmoney ");
+		}else{
+			buf.append("select sum(decode(type_id, 1, real_money, 0)) inmoney, ");  
+			buf.append("       sum(decode(type_id, 2, real_money, 0)) outmoney "); 
+		}
 		buf.append("  from money_detail_view t                        ");  
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
@@ -617,14 +622,17 @@ public class ConstarctReportDao {
 	 * @param smallType
 	 * @return
 	 */
-	public List getInAndOut() {
+	public List getInAndOut(boolean checkSplitNo) {
 		List ans = new ArrayList();
 		StringBuffer buf = new StringBuffer();
-		buf.append("select year,            													");			
+		buf.append("select year,            						  ");			
 		buf.append("       month,                                     ");
 		buf.append("       MAX(decode(type_id, 1, money, 0)) inmoney, ");
 		buf.append("       MAX(decode(type_id, 2, money, 0)) outmoney ");
-		buf.append("  from (select sum(t.money) money,                ");
+		if(checkSplitNo)
+			buf.append("  from (select sum(t.money) money,                ");
+		else
+			buf.append("  from (select sum(t.real_money) money,                ");
 		buf.append("               to_char(t.money_time, 'yyyy') year,");
 		buf.append("               to_char(t.money_time, 'MM') month, ");
 		buf.append("               type_id                            ");
@@ -660,10 +668,13 @@ public class ConstarctReportDao {
 	 * @return
 	 */
 	public List getDetailReport(String year, String month, String bigType,
-			String smallType) {
+			String smallType,boolean splitNo) {
 		List ans = new ArrayList();
 		StringBuffer buf = new StringBuffer();
-		buf.append("select t.year, t.month, t.tally_type_desc, t.money_type, t.money");
+		if(splitNo)
+			buf.append("select t.year, t.month, t.tally_type_desc, t.money_type, t.money");
+		else
+			buf.append("select t.year, t.month, t.tally_type_desc, t.money_type, t.real_money money");
 		if (bigType == null)
 			buf.append(" from money_detail_big_type_month t");
 		else

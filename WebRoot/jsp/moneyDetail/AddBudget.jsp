@@ -184,7 +184,7 @@
 							%>
 							<input type='hidden' id='addType' />
 							<button onclick="addDetail();" width='100'>
-								 添加预算1
+								设置预算
 							</button> 
 							<%
 							} else {
@@ -194,10 +194,7 @@
 							</button> 
 							<%
 							}
-							%>
-							<button onclick="weishenme()" width='100'>
-								删除
-							</button>
+							%> 
 						</td>
 					</tr>
 					</table><table id='budgettypes'>
@@ -218,23 +215,23 @@
 					%></tr> 
 				</table> 
 			<hr>
-			<div style="height: 500px; over-flow: scroll;">
-				<table class="mytable" width="800px" height="500px">
+			<div style="height: 500px;width:600px; overflow-x : visible ; overflow-y : scroll; ">
+				<table class="mytable"  >
 					<TR>
-						<th>
-							选择
+						<th width='50px'>
+							操作
 						</th>
-						<th>
+						<th width='50px'>
 							年份
 						</th>
-						<th>
+						<th width='50px'>
 							月份
 						</th>
 						<%
 								for (int i = 0, j = list.size(); i < j; i++) {
 								Object[] objs = (Object[]) list.get(i);
 						%>
-						<th><%=objs[1]%></th>
+						<th width='150px'><%=objs[1]%></th>
 						<%
 						}
 						%>
@@ -247,9 +244,9 @@
 							String year = time.substring(0, 4);
 							String month = time.substring(5, 7);
 					%>
-					<TR>
+					<TR trid="tr<%=i%>">
 						<td>
-							<input type='radio' name='chk' year="<%=year%>" month="<%=month%>">
+							<a href='javascript:weishenme("<%=year%>","<%=month%>","tr<%=i%>")'>删除</a>
 						</td>
 						<td><%=year%></td>
 						<td><%=month%></td>
@@ -265,8 +262,8 @@
 									//预算金额 
 									BigDecimal b = (BigDecimal) budgetDetail.get(key);
 									double bd = 0.0;
-									if (d != null)
-										bd = d.doubleValue(); 
+									if (b != null)
+										bd = b.doubleValue(); 
 									if (dd > bd) {
 						%>
 						<td style="color: red"><%=bd + "/" + dd%></td>

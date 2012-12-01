@@ -63,7 +63,7 @@ public class LoginAction {
 				commonDao.doUpdateSqlQuery("update config set canseein = '1'");
 				ConstarctReportDao dao2 = new ConstarctReportDao();
 				// 全部的收支
-				List allInAndOut = dao2.getAllInAndOut();
+				List allInAndOut = dao2.getAllInAndOut(true);
 				// 查询每年的收支统计
 				List inAndOut2 = dao2.getYearInAndOut();
 

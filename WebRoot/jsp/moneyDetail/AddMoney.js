@@ -50,7 +50,7 @@
  			return ;
  		}else{
  			desc.next().text('');
- 		}
+ 		} 
  		moneyDetail.money = oMoney.val();
  		moneyDetail.booktype = $('#booktype').val();
  		moneyDetail.splitMonths = $('#splitMonths').val();

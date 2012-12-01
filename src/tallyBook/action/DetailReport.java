@@ -29,6 +29,7 @@ public class DetailReport {
 	String month;
 	String bigType;
 	String smallType;
+	String splitNo;
 
 	public ConstarctReportDao getDao() {
 		return dao;
@@ -207,11 +208,15 @@ public class DetailReport {
 		// 根据类别进行统计
 		List groupByType = dao.getDetailReportByType(year, month, bigType,
 				smallType);
+		//是否考虑拆分的情况，默认是考虑的！
+		boolean checkSplitNo =true;
 		// 查询全部的金额，类型列表
-		List ans = dao.getDetailReport(year, month, bigType, smallType);
+		if("no".equals(splitNo))
+			checkSplitNo = false;
+		List ans = dao.getDetailReport(year, month, bigType, smallType,checkSplitNo);
 		// 查询每月的收支总数
-		List inAndOut = dao.getInAndOut();
-		List allInAndOut = dao.getAllInAndOut();
+		List inAndOut = dao.getInAndOut(checkSplitNo);
+		List allInAndOut = dao.getAllInAndOut(checkSplitNo);
 		// 查询每年的收支统计
 		List inAndOut2 = dao.getYearInAndOut();
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -227,6 +232,7 @@ public class DetailReport {
 			request.setAttribute("nolinktitle", "true");
 			request.setAttribute("bigType", bigType);
 		}
+		request.setAttribute("splitNo", splitNo);
 		return "detailReport";
 	}
 
@@ -531,14 +537,22 @@ public class DetailReport {
 	 */
 	public String reportDetailInBigType() {
 		ConstarctReportDao dao = new ConstarctReportDao();
-		List ans = dao.getDetailReport(year, month, bigType, smallType);
+		List ans = dao.getDetailReport(year, month, bigType, smallType,true);
 		HttpServletRequest request = ServletActionContext.getRequest();
-		List inAndOut = dao.getInAndOut();
+		List inAndOut = dao.getInAndOut(true);
 		List inAndOut2 = dao.getYearInAndOut();
-		List inAndOut3 = dao.getAllInAndOut();
+		List inAndOut3 = dao.getAllInAndOut(true);
 		// 处理查询的结果集合得到需要的字符串结果。
 		parseResustMap(ans, request, inAndOut, inAndOut2, inAndOut3);
 		return "detailReport";
+	}
+
+	public String getSplitNo() {
+		return splitNo;
+	}
+
+	public void setSplitNo(String splitNo) {
+		this.splitNo = splitNo;
 	}
 
 }

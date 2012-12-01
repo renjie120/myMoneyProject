@@ -12,9 +12,11 @@
 	//如果是按照的自选的时间和年份进行选择时间，就计算新的起始时间和结束时间.
 	if(!Util.isEmpty(year)&&!"-1".equals(year)){
 		//只有选择了年份才进行开始时间和结束时间的转换.
+		System.out.println("year=="+year+",,,month=="+month);
 		String[] ans = MoneyDetailsReport.getStartAndEndTimeOneMonth(year,month);
 		minTime = ans[0];
 		maxTime = ans[1];
+		System.out.println("year=="+minTime+",,,month=="+maxTime);
 		//将后面的日期进行取前面的一天
 		maxTime = DateUtil.toString(DateUtil.afterAnyDay(DateUtil.getDate(maxTime,"yyyy-MM-dd"),-1));
 	} 

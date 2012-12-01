@@ -74,8 +74,10 @@ public class DwrBo {
 	 * @return
 	 */
 	public String saveMoneyDetail(MoneyDetail mDetail) {
-		if(mDetail.getSplitMonths()<0)
+		if(mDetail.getSplitMonths()<0){
+			mDetail.setRealMoney(mDetail.getMoney());
 			moneyDetailDao.doCreate(mDetail);
+		}
 		else{
 			Calendar calender = Calendar.getInstance();
 	        calender.setTime(mDetail.getMoneyTime()); 
@@ -93,6 +95,10 @@ public class DwrBo {
 				if(i>0)
 					calender.add(Calendar.MONTH, 1);
 				newM.setMoney(avg);
+				if(i==0)
+					newM.setRealMoney(m);
+				else
+					newM.setRealMoney(0);
 				newM.setMoneyTime(calender.getTime());
 				moneyDetailDao.doCreate(newM); 
 			}
@@ -187,8 +193,10 @@ public class DwrBo {
 	 * @return
 	 */
 	public String updateMoneyDetail(MoneyDetail mDetail) {
-		if(mDetail.getSplitMonths()<0)
+		if(mDetail.getSplitMonths()<0){
+			mDetail.setRealMoney(mDetail.getMoney());
 			moneyDetailDao.doUpdate(mDetail.getMoneySno(),mDetail);
+		}
 		else{ 
 			Calendar calender = Calendar.getInstance();
 	        calender.setTime(mDetail.getMoneyTime()); 
@@ -205,6 +213,10 @@ public class DwrBo {
 				newM.setSplitNo(bg.intValue()); 
 				if(i>0)
 					calender.add(Calendar.MONTH, 1);
+				if(i==0)
+					newM.setRealMoney(m);
+				else
+					newM.setRealMoney(0);
 				newM.setMoney(avg);
 				newM.setMoneyTime(calender.getTime());
 				moneyDetailDao.doCreate(newM); 

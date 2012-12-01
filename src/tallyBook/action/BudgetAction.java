@@ -2,6 +2,7 @@ package tallyBook.action;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,7 +75,15 @@ public class BudgetAction {
 		HttpServletResponse response = ServletActionContext.getResponse();
 		GroovyUtil2 dynamicGroovy = new GroovyUtil2();
 		budgetName = changeStr(budgetName);
-		 Object[] params = { budgetName};  
+		Map m = new HashMap();
+		String[] buggets = budgetName.split(";");
+		for(String s:buggets){
+			String[] arr = s.split(",");
+			m.put(arr[0], arr[1]);
+		}
+		m.put("year", year);
+		m.put("month",month);
+		Object[] params = { m};  
 		Object result = dynamicGroovy.invokeScriptMethod( request.getRealPath("/")+
 				"groovy\\BudgetGroovy.groovy",
 				"addBudgetDetail", params);

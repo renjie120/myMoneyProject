@@ -88,21 +88,19 @@ class BudgetType  {
     	return m
     }
     
-    def deleteBudgetDetail(y,m){   
-    	println y+"---"+m
+    def deleteBudgetDetail(y,m){    
     	oraclesql.execute("delete from  budgetdetail where year = ? and month = ?",[y,m])  
     	return   "删除完毕!"
     }
     
-    def addBudgetDetail(m){ 
-    	//为什么map里面的value都是list类型的？？奇怪。
+    def addBudgetDetail(m){   
     	def year  =m.get("year")
-    	def month  =m.get("month")  
-    	 if(!"-1".equals(month[0])){ 
+    	def month  =m.get("month")   
+    	 if(!"-1".equals(month)){ 
     		 m.each{k,v-> 
 	    		if(k.indexOf('budgettype')==0){
 	    			k = k.replace('budgettype','') 
-	    			oraclesql.execute("insert into budgetdetail(year,month,budgettype,money) values(?,?,?,?)",[year[0],month[0],k,v[0]])
+	    			oraclesql.execute("insert into budgetdetail(year,month,budgettype,money) values(?,?,?,?)",[year,month,k,v])
 	    		}
 	    	} 
     	}else{ 
@@ -110,7 +108,7 @@ class BudgetType  {
     		    m.each{k,v-> 
 		    		if(k.indexOf('budgettype')==0){
 		    			k = k.replace('budgettype','')
-		    			oraclesql.execute("insert into budgetdetail(year,month,budgettype,money) values(?,?,?,?)",[year[0],item,k,v[0]])
+		    			oraclesql.execute("insert into budgetdetail(year,month,budgettype,money) values(?,?,?,?)",[year,item,k,v])
 		    		}
 		    	} 
     		}
@@ -152,6 +150,7 @@ def updateBudget(id,name,moneyType) {
 
 def deleteBudgetDetail(year,month) {
 	BudgetType tp = new BudgetType(); 
+	println 12345
 	tp.deleteBudgetDetail(year,month);  
 }
 
