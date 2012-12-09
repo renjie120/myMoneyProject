@@ -7,6 +7,8 @@ $(function(){
 	   $('select').width(100);
  }); 
 	 
+
+
 document.onkeydown=defaultFun;
 //默认的执行函数是点击【登陆】按钮
 function defaultFun(event){
@@ -83,4 +85,4 @@ function quit(){
         	window.location = appPath+"/jsp/Login.jsp";  	
         }
       });
-}
+} 

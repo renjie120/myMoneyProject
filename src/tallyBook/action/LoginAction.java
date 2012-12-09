@@ -13,11 +13,11 @@ import myOwnLibrary.cache.CacheManager;
 
 import org.apache.struts2.ServletActionContext;
 
-import common.base.SpringContextUtil;
-
 import tallyBook.dao.ConstarctReportDao;
 import tallyBook.dao.DaoUtil;
 import tallyBook.dao.LoginDao;
+
+import common.base.SpringContextUtil;
 
 /**
  * µÇÂ½ÏµÍ³
@@ -134,7 +134,7 @@ public class LoginAction {
 			e.printStackTrace();
 		}
 		return null;
-	}
+	}  
 
 	public String beforeUpdate() {
 		dao = new LoginDao();

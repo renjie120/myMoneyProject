@@ -89,6 +89,12 @@
  		$('button').attr('disabled',false);
  	}
  	
+function syn(){  
+		$('button').attr('disabled',true);
+ 		$('#mes').show().text("正在同步，请等候...");
+ 		dwrBo.distillFromServer2(afterDistill); 
+}
+
  	function update(){ 
  		var moneyDetail = {};
  		var oMoney = $('#money');

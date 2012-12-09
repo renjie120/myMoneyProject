@@ -100,7 +100,7 @@ body {
 						<button onclick="update()"
 							style="BORDER: #7EBF4F 1px solid; height: 25px;">
 							Ã·Ωª
-						</button>
+						</button> 
 					</td>
 				</tr>
 				<% 

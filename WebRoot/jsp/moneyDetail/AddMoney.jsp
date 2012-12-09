@@ -176,10 +176,7 @@ body {
 						<input type='hidden' id='addType' />
 						<button onclick="add();">
 							添加记录
-						</button>
-						<button onclick="distill();">
-							远程提取
-						</button>
+						</button> 
 						<%
 						} else {
 						%>
@@ -189,6 +186,9 @@ body {
 						<%
 						}
 						%>
+						<button type="button" onclick="syn()" >
+							同步
+						</input>
 					</td>
 				</tr>
 				<tr>

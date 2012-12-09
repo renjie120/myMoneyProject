@@ -2,6 +2,7 @@ package tallyBook.action;
 import groovy.sql.*
 import java.sql.* 
 import java.util.*
+import groovy.json.*
   
 class BudgetType  { 
     def oradb,oraclesql
@@ -93,6 +94,20 @@ class BudgetType  {
     	return   "删除完毕!"
     }
     
+    def synMoneys(str){    
+    	def slurper = new JsonSlurper()
+		def myMonyes = slurper.parseText(str)
+		def count = 0 
+		myMonyes.each{
+		    mp-> 
+		     def sqls=  """insert into money_detail_t(money_sno,money_time,money,money_type,money_desc,useful) 
+		            values( SEQMONEYSNO.nextval,to_date(?,'yyyy-MM-dd'),? ,?,?,1)"""   
+		     oraclesql.execute(sqls,[mp.money_time,mp.money,mp.money_type,mp.money_desc])   
+		     count++ 
+		}  
+    	return   "同步完毕,完成条目数:"+count
+    }
+    
     def addBudgetDetail(m){   
     	def year  =m.get("year")
     	def month  =m.get("month")   
@@ -158,6 +173,11 @@ def deleteBudgetDetail(year,month) {
 def addBudgetDetail(m) {
 	BudgetType tp = new BudgetType(); 
 	tp.addBudgetDetail(m);  
+}
+ 
+def synMoneys(str) {
+	BudgetType tp = new BudgetType(); 
+	tp.synMoneys(str);  
 }
  
 //runtest name,moneyType 

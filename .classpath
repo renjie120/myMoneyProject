@@ -39,5 +39,8 @@
 	<classpathentry kind="lib" path="lib/xwork-core-2.1.6.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.6.0_10"/>
 	<classpathentry kind="lib" path="lib/jsoup-1.6.3.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/basetool-1.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpclient-4.2.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpcore-4.2.2.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

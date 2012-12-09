@@ -5,8 +5,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import myOwnLibrary.CommonStockSelDao;
 import myOwnLibrary.taglib.OptionColl;
 import myOwnLibrary.util.DateUtil;
+import myOwnLibrary.util.GroovyUtil2;
 import myOwnLibrary.util.Util;
 import myOwnLibrary.util.XlsExport;
 
@@ -28,6 +31,7 @@ import tallyBook.pojo.DiaryDetail;
 import tallyBook.pojo.GongguoDetail;
 import tallyBook.pojo.MoneyDetail;
 import tallyBook.pojo.ShopCard;
+import brightmoon.web.HttpClientUtil;
 
 import common.base.SpringContextUtil;
 
@@ -143,10 +147,18 @@ public class GridAction {
 		this.moneyDesc = moneyDesc;
 	}
 
-	public static void main(String[] args){
-		System.out.println();
-	} 
-	
+	public static void main(String[] args) {
+		HttpClientUtil util = new HttpClientUtil();
+		Map params = new HashMap(10);
+		params.put("method", "queryMoneyCount");
+		params.put("arg", "{arg1:0}");
+		// 得到待同步的行数.
+		int count = Integer.parseInt(util.postUrlWithParams(
+				"http://renjie120.com/management/syn!doAdd.do", params, true,
+				"GBK").trim());
+		System.out.println(count);
+	}
+
 	private static Date getDate(String dateStr, String formateStr) {
 		SimpleDateFormat formatter2 = new SimpleDateFormat(formateStr);
 		Date date = new Date();
@@ -175,6 +187,44 @@ public class GridAction {
 		setMoneySort(getMoneySort());
 		setMoneyDesc(getMoneyDesc());
 		return "list";
+	}
+ 
+	/**
+	 * 同步数据!
+	 * 
+	 * @return
+	 */
+	public String syn() {
+		HttpServletResponse response = ServletActionContext.getResponse();
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpClientUtil util = new HttpClientUtil();
+		Map params = new HashMap(10);
+		params.put("method", "queryMoneyCount");
+		params.put("arg", "{arg1:0}");
+		// 得到待同步的行数.
+		int count = Integer.parseInt(util.postUrlWithParams(
+				"http://renjie120.com/management/syn!doAdd.do", params, true,
+				"GBK").trim());
+
+		// 得到待同步的数据
+		params.put("method", "getAllNewMoneys");
+		params.put("arg", "{arg1:0,arg2:0,arg3:" + count + "}");
+		String allMoneys = util.postUrlWithParams(
+				"http://renjie120.com/management/syn!doAdd.do", params, true,
+				"GBK");
+
+		GroovyUtil2 dynamicGroovy = new GroovyUtil2();
+		Object[] p = { allMoneys };
+		Object result = dynamicGroovy.invokeScriptMethod(request
+				.getRealPath("/")
+				+ "groovy\\BudgetGroovy.groovy", "synMoneys", p);
+		try {
+			response.setContentType("text/html;charset=GBK");
+			response.getWriter().write(result + "");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
@@ -222,68 +272,65 @@ public class GridAction {
 		return sb.toString();
 	}
 
- 
 	public String exportExcel() {
-		dao =(DaoUtil)SpringContextUtil.getBean("daoUtil"); 
+		dao = (DaoUtil) SpringContextUtil.getBean("daoUtil");
 		HttpServletRequest request = ServletActionContext.getRequest();
-		HttpServletResponse response =ServletActionContext.getResponse();
+		HttpServletResponse response = ServletActionContext.getResponse();
 		MoneyDetail condition = getQueryCondition();
 		StringBuffer buf = new StringBuffer();
 		buf.append(" where 1=1 ");
-		buf.append(QueryCondition.getMDetailConditon(condition)); 
-	 
+		buf.append(QueryCondition.getMDetailConditon(condition));
+
 		SimpleDateFormat dateformat1 = new SimpleDateFormat("yyyy-MM-dd");
 		String a1 = dateformat1.format(new Date());
 		response.setContentType("Application/excel");
-		String fileNameString = toUtf8String("明细" + a1
-				+ ".xls");
+		String fileNameString = toUtf8String("明细" + a1 + ".xls");
 		response.addHeader("Content-Disposition", "attachment;filename="
 				+ fileNameString);
 
-		XlsExport e = new XlsExport(); 
+		XlsExport e = new XlsExport();
 		// 添加标题
 		e.createRow(0);
-		 
-		int jj=0;
-		e.setCell(jj++,"序号");
-		e.setCell(jj++,"时间");
-		e.setCell(jj++,"金额");
-		e.setCell(jj++,"类别"); 
-		e.setCell(jj++,"消费卡");
-		e.setCell(jj++,"收支");
+
+		int jj = 0;
+		e.setCell(jj++, "序号");
+		e.setCell(jj++, "时间");
+		e.setCell(jj++, "金额");
+		e.setCell(jj++, "类别");
+		e.setCell(jj++, "消费卡");
+		e.setCell(jj++, "收支");
 		String sortname = request.getParameter("sortname");
 		sortname = "undefined".equals(sortname) ? "" : sortname;
 		String sortorder = request.getParameter("sortorder");
 		sortorder = "undefined".equals(sortorder) ? "" : sortorder;
-		List details = dao.doQueryList(getSortStr(queryStr
-				+ buf.toString() + " order by money_time  desc,MONEY",
-				sortname, sortorder));
+		List details = dao.doQueryList(getSortStr(queryStr + buf.toString()
+				+ " order by money_time  desc,MONEY", sortname, sortorder));
 		Iterator it = details.iterator();
 		List realDetails = new ArrayList();
-		int i=0;
+		int i = 0;
 		while (it.hasNext()) {
 			e.createRow(i + 1);
-			int ii=0;
-			Object[] objs = (Object[]) it.next(); 
+			int ii = 0;
+			Object[] objs = (Object[]) it.next();
 			e.setCell(ii++, objs[0].toString());
 			e.setCell(ii++, objs[1].toString());
 			e.setCell(ii++, objs[2].toString());
 			e.setCell(ii++, objs[3].toString());
 			e.setCell(ii++, objs[4].toString());
 			e.setCell(ii++, objs[5].toString());
-			e.setCell(ii++, objs[5].toString().equals("1") ? "+" : "—");  
+			e.setCell(ii++, objs[5].toString().equals("1") ? "+" : "—");
 		}
 		e.exportXls(response);
 		return null;
 	}
-	
+
 	/**
 	 * 统计总的收入，支出信息
 	 * 
 	 * @return
 	 */
 	public String getSumMoney() {
-		dao =(DaoUtil)SpringContextUtil.getBean("daoUtil"); 
+		dao = (DaoUtil) SpringContextUtil.getBean("daoUtil");
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
 
@@ -309,7 +356,7 @@ public class GridAction {
 		buf2
 				.append("select decode(sum(money),null,0,sum(money)) from money_detail_view t where t.type_id = '2' ");
 		buf2.append(QueryCondition.getMDetailConditon(queryCondition));
-		double out =  dao.queryDouble(buf2.toString());
+		double out = dao.queryDouble(buf2.toString());
 
 		try {
 			response.setContentType("text/html;charset=GBK");
@@ -327,7 +374,7 @@ public class GridAction {
 	 * @return
 	 */
 	public String getShopCardInfos() {
-		dao=(DaoUtil)SpringContextUtil.getBean("daoUtil"); 
+		dao = (DaoUtil) SpringContextUtil.getBean("daoUtil");
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String queryStr = "select card_desc,card_deadline,card_no,retainMoney,Allmoney,moneycount,card_url,card_sno,card_money from shopcard_view ";
 		List realDetails = new ArrayList();
@@ -372,7 +419,7 @@ public class GridAction {
 		return new int[] { start, end, page };
 	}
 
-	private MoneyDetail getQueryCondition(){
+	private MoneyDetail getQueryCondition() {
 		MoneyDetail queryCondition = new MoneyDetail();
 		queryCondition.setMinTime(getMinTime());
 		if (!Util.isBlank(getShopCard()) && !"-1".equals(getShopCard()))
@@ -386,21 +433,21 @@ public class GridAction {
 		queryCondition.setMoneyDesc(getMoneyDesc());
 		return queryCondition;
 	}
-	 
+
 	/**
 	 * 查询消费细节的表格.
 	 * 
 	 * @return
 	 */
 	public String initMoneyDetailGrid() {
-		dao =(DaoUtil)SpringContextUtil.getBean("daoUtil"); 
-		
+		dao = (DaoUtil) SpringContextUtil.getBean("daoUtil");
+
 		MoneyDetail queryCondition = getQueryCondition();
-		
+
 		HttpServletRequest request = ServletActionContext.getRequest();
-		HttpServletResponse response = ServletActionContext.getResponse(); 
+		HttpServletResponse response = ServletActionContext.getResponse();
 		int[] startAndEndAndPage = new int[3];
-	    StringBuffer buf = new StringBuffer();
+		StringBuffer buf = new StringBuffer();
 		buf.append(" where 1=1 ");
 		buf.append(QueryCondition.getMDetailConditon(queryCondition));
 		String sortname = request.getParameter("sortname");
@@ -409,8 +456,7 @@ public class GridAction {
 		sortorder = "undefined".equals(sortorder) ? "" : sortorder;
 		int count = 0;
 		try {
-			count = dao.queryInt(
-					queryCount + buf.toString());
+			count = dao.queryInt(queryCount + buf.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -445,7 +491,7 @@ public class GridAction {
 	}
 
 	public String initExtMoneyDetailGrid() {
-		dao =(DaoUtil)SpringContextUtil.getBean("daoUtil");
+		dao = (DaoUtil) SpringContextUtil.getBean("daoUtil");
 		MoneyDetail queryCondition = new MoneyDetail();
 		queryCondition.setMinTime(getMinTime());
 		if (!Util.isBlank(getShopCard()) && !"-1".equals(getShopCard()))
@@ -473,7 +519,7 @@ public class GridAction {
 		sortorder = "undefined".equals(sortorder) ? "" : sortorder;
 		int count = 0;
 		try {
-			count =  dao.queryInt(queryCount + buf.toString());
+			count = dao.queryInt(queryCount + buf.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -511,7 +557,8 @@ public class GridAction {
 	}
 
 	/**
-	 * 添加排序之后的新的sql语句. 
+	 * 添加排序之后的新的sql语句.
+	 * 
 	 * @param oldsql
 	 * @param sortName
 	 * @param orderType
@@ -528,7 +575,8 @@ public class GridAction {
 	}
 
 	/**
-	 * 得到详细信息. 
+	 * 得到详细信息.
+	 * 
 	 * @return
 	 * @throws Exception
 	 * @throws NumberFormatException
@@ -536,7 +584,7 @@ public class GridAction {
 	public String beforeUpdateMoneyDetail() {
 		moneySno = getMoneySno();
 		MoneyDetailDao tempdao = new MoneyDetailDao();
-		MoneyDetail moneyDetail; 
+		MoneyDetail moneyDetail;
 		try {
 			moneyDetail = tempdao.doGet(Integer.parseInt(moneySno));
 			// 收支描述
@@ -552,7 +600,7 @@ public class GridAction {
 			// 时间
 			setMoneyTime(Util.dateToStr(moneyDetail.getMoneyTime(),
 					"yyyy-MM-dd"));
-			setMoneyTypeDesc(moneyDetail.getMoneyTypeDesc()); 
+			setMoneyTypeDesc(moneyDetail.getMoneyTypeDesc());
 			setSplitNo(moneyDetail.getSplitNo());
 			setSplitNoStr(moneyDetail.getSplitNoStr());
 			setMessage("修改信息");
