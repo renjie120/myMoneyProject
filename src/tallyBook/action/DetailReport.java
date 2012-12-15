@@ -209,11 +209,12 @@ public class DetailReport {
 		List groupByType = dao.getDetailReportByType(year, month, bigType,
 				smallType);
 		//是否考虑拆分的情况，默认是考虑的！
-		boolean checkSplitNo =true;
+		boolean checkSplitNo = true;
 		// 查询全部的金额，类型列表
-		if("no".equals(splitNo))
+		if ("no".equals(splitNo))
 			checkSplitNo = false;
-		List ans = dao.getDetailReport(year, month, bigType, smallType,checkSplitNo);
+		List ans = dao.getDetailReport(year, month, bigType, smallType,
+				checkSplitNo);
 		// 查询每月的收支总数
 		List inAndOut = dao.getInAndOut(checkSplitNo);
 		List allInAndOut = dao.getAllInAndOut(checkSplitNo);
@@ -285,18 +286,19 @@ public class DetailReport {
 	private String getStr(String in, String out) {
 		double dIn = Double.parseDouble(in);
 		double dOut = Double.parseDouble(out);
-		// return "<font color='green' tag='1'>" + in
-		// + "</font>&nbsp;<font color='black' tag='2'>" + out
-		// + "</font>&nbsp;<font color='red' tag='3'>"
-		// + Util.subtract(dIn, dOut)
-		// + "</font>&nbsp;<font color='black' tag='4'>"
-		// + Util.multiply(Util.divide(dOut,dIn , 4), 100) + "%</font>";
 		String mv = "-";
 		if (dIn != 0) {
 			mv = "" + Util.multiply(Util.divide(dOut, dIn, 4), 100);
-		}
-		return "<font color='red' tag='3'>" + Util.subtract(dIn, dOut)
-				+ "</font>&nbsp;<font color='black' tag='4'>" + mv + "%</font>";
+		} 
+		return "<font color='green' tag='1'>" + in
+				+ "</font>&nbsp;<font color='black' tag='2'>" + out
+				+ "</font>&nbsp;<font color='red' tag='3'>"
+				+ Util.subtract(dIn, dOut)
+				+ "</font>&nbsp;<font color='black' tag='4'>"
+				+ mv+ "%</font>";
+
+//		return "<font color='red' tag='3'>" + Util.subtract(dIn, dOut)
+//				+ "</font>&nbsp;<font color='black' tag='4'>" + mv + "%</font>";
 	}
 
 	/**
@@ -537,7 +539,7 @@ public class DetailReport {
 	 */
 	public String reportDetailInBigType() {
 		ConstarctReportDao dao = new ConstarctReportDao();
-		List ans = dao.getDetailReport(year, month, bigType, smallType,true);
+		List ans = dao.getDetailReport(year, month, bigType, smallType, true);
 		HttpServletRequest request = ServletActionContext.getRequest();
 		List inAndOut = dao.getInAndOut(true);
 		List inAndOut2 = dao.getYearInAndOut();
