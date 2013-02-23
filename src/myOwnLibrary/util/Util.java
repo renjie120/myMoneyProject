@@ -36,8 +36,6 @@ import myOwnLibrary.mvc.MVCException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import tallyBook.pojo.MoneyDetail;
  
 
 /**

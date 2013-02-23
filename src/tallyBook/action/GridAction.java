@@ -747,7 +747,7 @@ public class GridAction {
 				}
 				// 下面要转换类型字符串为编码!
 				mDetail.setMoneyType(Util.notBlank(tallyTypes.findId(moneyType
-						.trim()), tallyTypes.findId(moneyDesc.trim())));
+						.trim()),moneyType));
 				mDetail.setMoneyDesc(moneyDesc);
 				// 设置账本类型
 				mDetail.setBooktype("1");

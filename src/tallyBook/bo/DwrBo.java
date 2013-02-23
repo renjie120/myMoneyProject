@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import myOwnLibrary.CommonStockSelDao;
 import myOwnLibrary.cache.CacheManager;
@@ -192,6 +191,11 @@ public class DwrBo {
 	}
 
 	public String distillFromServer2() {
+		String synserver = "127.0.0.1";
+		String port = "1988";
+		if(port!=null&&!port.equals(""))
+			synserver+=":"+port;
+		System.out.println("同步服务器地址是："+synserver);
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpClientUtil util = new HttpClientUtil();
 		Map params = new HashMap(10);
@@ -199,7 +203,7 @@ public class DwrBo {
 		params.put("arg", "{arg1:0}");
 		// 得到待同步的行数.
 		int count = Integer.parseInt(util.postUrlWithParams(
-				"http://renjie120.com/management/syn!doAdd.do", params, true,
+				"http://"+synserver+"/management/syn!doAdd.do", params, true,
 				"GBK").trim());
 
 		// 得到待同步的数据
@@ -207,19 +211,17 @@ public class DwrBo {
 			params.put("method", "getAllNewMoneys");
 			params.put("arg", "{arg1:0,arg2:0,arg3:" + count + "}");
 			String allMoneys = util.postUrlWithParams(
-					"http://renjie120.com/management/syn!doAdd.do", params,
+					"http://"+synserver+"/management/syn!doAdd.do", params,
 					true, "GBK");
 
 			GroovyUtil2 dynamicGroovy = new GroovyUtil2();
 			Object[] p = { allMoneys };
-			Object result = dynamicGroovy.invokeScriptMethod(getClass()
-					.getResource("/").getPath()
-					+ "groovy\\BudgetGroovy.groovy", "synMoneys", p);
+			Object result = dynamicGroovy.invokeScriptMethod("D:\\work\\NewHibernateMoney\\WebRoot\\groovy\\BudgetGroovy.groovy", "synMoneys", p);
 
 			params.put("method", "updateAllNewMoneys");
 			params.put("arg", "{arg1:1,arg2:0}");
 			util.postUrlWithParams(
-					"http://renjie120.com/management/syn!doAdd.do", params);
+					"http://"+synserver+"/management/syn!doAdd.do", params);
 			return result + "";
 		} else {
 			return "全部已经同步！";

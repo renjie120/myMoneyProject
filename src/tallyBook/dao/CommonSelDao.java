@@ -72,7 +72,7 @@ public class CommonSelDao {
 			c.setValue(allTallyTypes);
 			CacheManager.putCache("tallyTypes",c);
 		}else{
-			allTallyTypes = (List)CacheManager.getCacheInfo("tallyTypes").getValue();
+			allTallyTypes = (List)(CacheManager.getCacheInfo("tallyTypes").getValue());
 		}
 		return allTallyTypes;
 	}
